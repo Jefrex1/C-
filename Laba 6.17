@@ -1,0 +1,83 @@
+#include <iostream>
+#include <string>
+#include <vector>
+#include <algorithm>
+
+struct Car {
+    std::string brand;
+    std::string licensePlate;
+    double mileage;
+    std::string rentalDate;
+    double paymentAmount;
+    std::string alarmSystem;
+};
+
+// Функція для виводу інформації про автомобіль
+void printCar(const Car& car) {
+    std::cout << "Марка: " << car.brand << std::endl;
+    std::cout << "Державний номер: " << car.licensePlate << std::endl;
+    std::cout << "Кілометраж пробігу: " << car.mileage << std::endl;
+    std::cout << "Дата здачі в оренду: " << car.rentalDate << std::endl;
+    std::cout << "Сума до оплати: " << car.paymentAmount << std::endl;
+    std::cout << "Сигналізація: " << car.alarmSystem << std::endl;
+    std::cout << "------------------------" << std::endl;
+}
+
+int main() {
+    std::vector<Car> cars;
+
+    int numCars;
+    std::cout << "Введіть кількість автомобілів: ";
+    std::cin >> numCars;
+
+    // Введення даних про автомобілі у масив
+    for (int i = 0; i < numCars; i++) {
+        Car car;
+        std::cin.ignore();
+        std::cout << "Введіть марку автомобіля: ";
+        std::getline(std::cin, car.brand);
+        std::cout << "Введіть державний номер: ";
+        std::getline(std::cin, car.licensePlate);
+        std::cout << "Введіть кілометраж пробігу: ";
+        std::cin >> car.mileage;
+        std::cin.ignore();
+        std::cout << "Введіть дату здачі в оренду: ";
+        std::getline(std::cin, car.rentalDate);
+        std::cout << "Введіть суму до оплати: ";
+        std::cin >> car.paymentAmount;
+        std::cin.ignore();
+        std::cout << "Чи є сигналізація (так/ні): ";
+        std::getline(std::cin, car.alarmSystem);
+        cars.push_back(car);
+    }
+
+    // Сортування за маркою автомобілів
+    std::sort(cars.begin(), cars.end(), [](const Car& a, const Car& b) {
+        return a.brand < b.brand;
+    });
+
+    // Виведення інформації про всі автомобілі
+    std::cout << "Інформація про всі автомобілі:" << std::endl;
+    for (const Car& car : cars) {
+        printCar(car);
+    }
+
+    // Пошук автомобілів без сигналізації
+    std::string searchBrand;
+    std::cout << "Введіть марку для пошуку автомобілів без сигналізації: ";
+    std::cin >> searchBrand;
+
+    bool found = false;
+    for (const Car& car : cars) {
+        if (car.brand == searchBrand && car.alarmSystem == "ні") {
+            printCar(car);
+            found = true;
+        }
+    }
+
+    if (!found) {
+        std::cout << "Автомобілів такої марки без сигналізації не знайдено." << std::endl;
+    }
+
+    return 0;
+}
