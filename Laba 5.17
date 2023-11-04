@@ -1,0 +1,28 @@
+#include <iostream>
+#include <cmath>
+
+double mclaren_series_term(int n, double x) {
+    double term = 1.0;
+    for (int i = 1; i <= n; i++) {
+        term *= (-1) * (2 * i - 1) * x / (4 * i * i);
+    }
+    return term;
+}
+
+int main() {
+    double x;
+    int n;
+    std::cout << "Введіть значення x: ";
+    std::cin >> x;
+    std::cout << "Введіть кількість елементів ряду (n): ";
+    std::cin >> n;
+
+    double result = 1.0; // Перший елемент ряду
+    for (int i = 1; i <= n; i++) {
+        result += mclaren_series_term(i, x);
+    }
+
+    std::cout << "Результат: " << result << std::endl;
+
+    return 0;
+}
