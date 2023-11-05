@@ -1,1 +1,122 @@
+/*Laba 7.17*/
 
+#include <iostream>
+#include <algorithm>
+#include <vector>
+#include <string>
+#include <fstream>
+using namespace std;
+
+struct Car {
+	string Marka;
+	string Nomer;
+	int KMprobig;
+	string DataZdachiOrendu;
+	int SummaDoSplatu;
+	string Signalizacia;
+};
+
+void printCar(const Car& car) {
+	cout << "Marka: " << car.Marka << endl;
+	cout << "Nomer: " << car.Nomer << endl;
+	cout << "KM probigu: " << car.KMprobig << endl;
+	cout << "Data orendu: " << car.DataZdachiOrendu << endl;
+	cout << "Summa do splatu: " << car.SummaDoSplatu << endl;
+	cout << "Signalizacia: " << car.Signalizacia << endl;
+	cout << "\n";
+}
+
+void saveDataToFile(const vector<Car>& cars, const string& filename) {
+	ofstream outFile(filename);
+	if (!outFile.is_open()) {
+		cout << "Pomilka vidkruvanna failu dla chutanna." << endl;
+		return;
+	}
+
+	for (const Car& car : cars) {
+		outFile << car.Marka << " "
+			<< car.Nomer << " "
+			<< car.KMprobig << " "
+			<< car.DataZdachiOrendu << " "
+			<< car.SummaDoSplatu << " "
+			<< car.Signalizacia << endl;
+	}
+
+	outFile.close();
+}
+
+void loadDataFromFile(vector<Car>& cars, const string& filename) {
+	ifstream inFile(filename);
+	if (!inFile.is_open()) {
+		cout << "Pomilka vidkruvanna failu dla redaktuvanna." << endl;
+		return;
+	}
+
+	cars.clear(); // Clear the current data in the vector
+
+	Car car;
+	while (inFile >> car.Marka >> car.Nomer >> car.KMprobig >> car.DataZdachiOrendu >> car.SummaDoSplatu >> car.Signalizacia) {
+		cars.push_back(car);
+	}
+
+	inFile.close();
+}
+
+
+int main()
+{
+	vector<Car> cars;
+
+	loadDataFromFile(cars, "car_data.txt");
+	cout << "Data loaded from car_data.txt" << endl;
+
+	int Kilkist_avto;
+	cout << "Vvedit kilkist avto: ";
+	cin >> Kilkist_avto;
+
+	for (int i = 0; i < Kilkist_avto; i++) {
+		Car car;
+		cout << i + 1 << " Automobil\n";
+		cout << "Vvedit marku avto: ";
+		cin >> car.Marka;
+		cout << "Vvedit nomer avto: ";
+		cin >> car.Nomer;
+		cout << "Vvedit probig avto v km: ";
+		cin >> car.KMprobig;
+		cout << "Vvedit datu zdaci v orendu: ";
+		cin >> car.DataZdachiOrendu;
+		cout << "Vvedit summu do splaty: ";
+		cin >> car.SummaDoSplatu;
+		cout << "Chy je signalizacia? (tak/ni): ";
+		cin >> car.Signalizacia;
+		cars.push_back(car);
+	}
+
+	sort(cars.begin(), cars.end(), [](const Car& a, const Car& b) {
+		return a.Marka < b.Marka;
+		});
+
+	cout << "Infa pro vsi avto:" << std::endl;
+	for (const Car& car : cars) {
+		printCar(car);
+	}
+
+	string searchBrand;
+	cout << "Vvedit marku dla poshuku avto bez signalizacii: ";
+	cin >> searchBrand;
+
+	bool found = false;
+	for (const Car& car : cars) {
+		if (car.Marka == searchBrand && car.Signalizacia == "ni") {
+			printCar(car);
+			found = true;
+		}
+	}
+
+	if (!found) {
+		cout << "Avtomobiliv takiji marku bez signalizacii ne znaideno." << endl;
+	}
+
+	saveDataToFile(cars, "car_data.txt");
+	cout << "Data saved to car_data.txt" << endl;
+}
