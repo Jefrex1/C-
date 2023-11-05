@@ -1,7 +1,8 @@
 #include <iostream>
 #include <cmath>
+using namespace std;
 
-double mclaren_series_term(int n, double x) {
+double mcloren(int n, double x) {
     double term = 1.0;
     for (int i = 1; i <= n; i++) {
         term *= (-1) * (2 * i - 1) * x / (4 * i * i);
@@ -12,17 +13,17 @@ double mclaren_series_term(int n, double x) {
 int main() {
     double x;
     int n;
-    std::cout << "Введіть значення x: ";
-    std::cin >> x;
-    std::cout << "Введіть кількість елементів ряду (n): ";
-    std::cin >> n;
+    cout << "Vvedit znachenya x: ";
+    cin >> x;
+    cout << "Vvedit kilkist elementiv radu (n): ";
+    cin >> n;
 
-    double result = 1.0; // Перший елемент ряду
+    double result = 1.0;
     for (int i = 1; i <= n; i++) {
-        result += mclaren_series_term(i, x);
+        result += mcloren(i, x);
     }
 
-    std::cout << "Результат: " << result << std::endl;
+    cout << "Result: " << result << endl;
 
     return 0;
 }
