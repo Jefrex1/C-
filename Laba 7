@@ -52,7 +52,7 @@ void loadDataFromFile(vector<Car>& cars, const string& filename) {
 		return;
 	}
 
-	cars.clear(); // Clear the current data in the vector
+	cars.clear();
 
 	Car car;
 	while (inFile >> car.Marka >> car.Nomer >> car.KMprobig >> car.DataZdachiOrendu >> car.SummaDoSplatu >> car.Signalizacia) {
