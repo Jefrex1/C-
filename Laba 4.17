@@ -1,17 +1,16 @@
+/*Laba 4.17*/
 #include <iostream>
+using namespace std;
 
 int main() {
     int matrix[7][7];
 
-    // Зчитуємо елементи матриці
-    std::cout << "Введіть елементи матриці:\n";
     for (int i = 0; i < 7; i++) {
         for (int j = 0; j < 7; j++) {
             matrix[i][j] = rand();
         }
     }
 
-    // Знайдемо добуток непарних елементів кожного стовпця
     for (int j = 0; j < 7; j++) {
         int product = 1;
         for (int i = 0; i < 7; i++) {
@@ -19,7 +18,7 @@ int main() {
                 product *= matrix[i][j];
             }
         }
-        std::cout << "Добуток непарних елементів у стовпці " << j + 1 << ": " << product << std::endl;
+        std::cout << "Dobutok neparnuh elementiv y stovpci " << j + 1 << ": " << product << std::endl;
     }
 
     return 0;
