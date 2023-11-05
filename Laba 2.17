@@ -1,25 +1,28 @@
+/*Laba 2.17*/
+
 #include <iostream>
 using namespace std;
 
 int main() {
-    int number;
+    int chyslo;
     cout << "Vvedit 5-rozradne chyslo: ";
-    cin >> number;
+    cin >> chyslo;
 
-    // Перевірка на подільність на 12
-    int lastDigit = number % 10;
-    int numberWithoutLastDigit = number / 10;
-    if ((numberWithoutLastDigit * 2 - lastDigit) % 12 == 0) {
-        cout << "Число подільне на 12" << endl;
-    } else {
-        cout << "Число не подільне на 12" << endl;
+    int lastChyslo = chyslo % 10;
+    int ChysloBezLast = chyslo / 10;
+
+    if ((ChysloBezLast * 2 - lastChyslo) % 12 == 0) {
+        cout << "Chyslo podilne na 12" << endl;
+    }
+    else {
+        cout << "Chyslo ne podilne na 12" << endl;
     }
 
-    // Перевірка на подільність на 13
-    if ((numberWithoutLastDigit - lastDigit * 9) % 13 == 0) {
-        cout << "Число подільне на 13" << endl;
-    } else {
-        cout << "Число не подільне на 13" << endl;
+    if ((ChysloBezLast - lastChyslo * 9) % 13 == 0) {
+        cout << "Chyslo podilne na 13" << endl;
+    }
+    else {
+        cout << "Chyslo ne podilne na 13" << endl;
     }
 
     return 0;
