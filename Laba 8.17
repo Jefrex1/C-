@@ -1,0 +1,60 @@
+#include <iostream>
+using namespace std;
+
+class Date {
+private:
+    int day;
+    int month;
+    int year;
+
+public:
+    Date() : day(1), month(1), year(2000) {}
+
+    Date(int d, int m, int y) : day(d), month(m), year(y) {}
+
+    // Методи set і get
+    void setDay(int d) { day = d; }
+    void setMonth(int m) { month = m; }
+    void setYear(int y) { year = y; }
+
+    int getDay() const { return day; }
+    int getMonth() const { return month; }
+    int getYear() const { return year; }
+
+    bool isLeapYear() const {
+        return (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
+    }
+
+    void increaseDate(int days) {
+        day += days;
+        while (day > 31 || (day > 30 && (month == 4 || month == 6 || month == 9 || month == 11)) || (day > 29 && month == 2) || (day > 28 && month == 2 && !isLeapYear())) {
+            day -= 31;
+            month++;
+            if (month > 12) {
+                month = 1;
+                year++;
+            }
+        }
+    }
+
+    void printDate() const {
+        cout << "Data: " << day << "/" << month << "/" << year << endl;
+    }
+};
+
+int main() {
+    Date myDate(5, 11, 2023);
+    myDate.printDate();
+
+    if (myDate.isLeapYear()) {
+        cout << "Rik je vusokosnum." << endl;
+    }
+    else {
+        cout << "Rik ne je vusokosnum." << endl;
+    }
+
+    myDate.increaseDate(5);
+    myDate.printDate();
+
+    return 0;
+}
