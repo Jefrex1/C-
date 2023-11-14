@@ -1,0 +1,91 @@
+#include <iostream>
+using namespace std;
+
+class Date {
+private:
+    int day;
+    int month;
+    int year;
+
+public:
+    Date() : day(1), month(1), year(2000) {}
+
+    Date(int d, int m, int y) : day(d), month(m), year(y) {}
+
+    bool isLeapYear() const {
+        return (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
+    }
+
+    void increaseDate(int days) {
+        day += days;
+        while (day > 31 || (day > 30 && (month == 4 || month == 6 || month == 9 || month == 11)) || (day > 29 && month == 2) || (day > 28 && month == 2 && !isLeapYear())) {
+            day -= 31;
+            month++;
+            if (month > 12) {
+                month = 1;
+                year++;
+            }
+        }
+    }
+
+    void printDate() const {
+        cout << "Data: " << day << "/" << month << "/" << year << endl;
+    }
+
+    Date operator++() {
+        ++day;
+        ++month;
+        ++year;
+        return *this;
+    }
+
+    Date operator--() {
+        --day;
+        --month;
+        --year;
+        return *this;
+    }
+
+    Date operator+(Date const obj) {
+        Date res;
+        res.day = day + obj.day;
+        res.year = year + obj.year;
+        return res;
+    }
+    Date operator-(Date const obj) {
+        Date res;
+        res.day = day - obj.day;
+        res.year = year - obj.year;
+        return res;
+    }
+    void printOper() {
+        cout << "Day: " << day << " Year: " << year << endl;
+    }
+};
+
+int main() {
+    Date myDate(5, 11, 2023);
+    Date myDate2(17, 5, 2000);
+    Date myDate3 = myDate + myDate2;
+    //myDate.operator++();
+    //myDate.operator--();
+
+    myDate3.printOper();
+    myDate3 = myDate - myDate2;
+    myDate3.printOper();
+
+    myDate.printDate();
+
+    if (myDate.isLeapYear()) {
+        cout << "Rik je vusokosnum." << endl;
+    }
+    else {
+        cout << "Rik ne je vusokosnum." << endl;
+    }
+
+    myDate.increaseDate(5);
+    myDate.printDate();
+
+
+    return 0;
+}
