@@ -60,13 +60,12 @@ public:
                 columnSum += array[i][j];
             }
             if (columnSum > threshold) {
-                // Вилучення стовпця
                 for (int i = 0; i < rows; ++i) {
                     array[i].erase(array[i].begin() + j);
                 }
-                // Оновлення розміру масиву після вилучення стовпця
+
                 cols--;
-                j--;  // Зменшення ітератора, оскільки стовпець був вилучений
+                j--;
             }
         }
     }
