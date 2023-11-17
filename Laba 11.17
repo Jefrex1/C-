@@ -1,0 +1,109 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+
+template <typename T>
+class ParametrizedArray {
+private:
+    vector<vector<T>> array;
+    int rows;
+    int cols;
+
+public:
+    ParametrizedArray(int numRows, int numCols) : rows(numRows), cols(numCols) {
+        array.resize(rows, vector<T>(cols));
+    }
+
+    // Функція для заповнення масиву введеними значеннями
+    void fillArray() {
+        for (int i = 0; i < rows; ++i) {
+            for (int j = 0; j < cols; ++j) {
+                cout << "Vvedit element na pozicii [" << i << "][" << j << "]: ";
+                cin >> array[i][j];
+            }
+        }
+    }
+
+    // Функція для виведення масиву
+    void printArray() {
+        for (int i = 0; i < rows; ++i) {
+            for (int j = 0; j < cols; ++j) {
+                cout << array[i][j] << "\t";
+            }
+            cout << endl;
+        }
+    }
+
+    // Функція для знаходження кількості пар однакових сусідніх елементів в рядках
+    int countAdjacentPairs() {
+        int count = 0;
+        for (int i = 0; i < rows; ++i) {
+            for (int j = 0; j < cols - 1; ++j) {
+                if (array[i][j] == array[i][j + 1]) {
+                    count++;
+                }
+            }
+        }
+        return count;
+    }
+
+    // Функція для знаходження суми квадратів усіх елементів масиву
+    T sumOfSquares() {
+        T sum = 0;
+        for (int i = 0; i < rows; ++i) {
+            for (int j = 0; j < cols; ++j) {
+                sum += array[i][j] * array[i][j];
+            }
+        }
+        return sum;
+    }
+
+    // Функція для вилучення стовпців, сума елементів яких більша введеного числа
+    void removeColumnsWithSumGreaterThan(T threshold) {
+        for (int j = 0; j < cols; ++j) {
+            T columnSum = 0;
+            for (int i = 0; i < rows; ++i) {
+                columnSum += array[i][j];
+            }
+            if (columnSum > threshold) {
+                // Вилучення стовпця
+                for (int i = 0; i < rows; ++i) {
+                    array[i].erase(array[i].begin() + j);
+                }
+                // Оновлення розміру масиву після вилучення стовпця
+                cols--;
+                j--;  // Зменшення ітератора, оскільки стовпець був вилучений
+            }
+        }
+    }
+};
+
+int main() {
+    int numRows, numCols;
+    cout << "Vvedit kilkist radkiv: ";
+    cin >> numRows;
+    cout << "Vvedit kilkist stovpciv: ";
+    cin >> numCols;
+
+    ParametrizedArray<int> myArray(numRows, numCols);
+
+    myArray.fillArray();
+    cout << "Masiv:" << endl;
+    myArray.printArray();
+
+    int numAdjacentPairs = myArray.countAdjacentPairs();
+    cout << "Kilkist sumizhnyh par u ryadakh: " << numAdjacentPairs << endl;
+
+    int sumSquares = myArray.sumOfSquares();
+    cout << "Suma kvadrativ usikh elementiv: " << sumSquares << endl;
+
+    int threshold;
+    cout << "Vvedit porogove znachennya dlya sumy stovptsya: ";
+    cin >> threshold;
+
+    myArray.removeColumnsWithSumGreaterThan(threshold);
+    cout << "Masyv pislya vydalennya stovptsiv iz sumoyu, bilshoyu nizh " << threshold << ":" << endl;
+    myArray.printArray();
+
+    return 0;
+}
