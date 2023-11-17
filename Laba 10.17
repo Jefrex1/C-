@@ -1,0 +1,49 @@
+#include <iostream>
+#include <string>
+#include <ctime>
+using namespace std;
+
+class Data {
+private:
+    int day;
+    int month;
+    int year;
+public:
+    Data(int d, int m, int y) : day(d), month(m), year(y) {}
+
+    double days_in_past_year = day + month*30.5 + year * 365;
+    //double days_in_birthday =
+
+
+    void printTime() const {
+        cout << "Data: " << day << "/" << month << "/" << year << endl;
+    }
+};
+
+class Spusok : public Data {
+private:
+    string PIB;
+    long long telefon;
+public:
+    Spusok(string p, long long t, int d, int m, int y) : PIB(p), telefon(t), Data(d, m, y) {}
+
+
+
+    void printData() const {
+        cout << "PIB: " << PIB << endl << "Telefon: " << telefon << endl;
+    }
+};
+
+int main()
+{
+    Data myDate(15, 11, 2023);
+    myDate.printTime();
+
+    Spusok myFriend("Bebra Ananas Vasulovich", +380677911793, 16, 01, 2024);
+    double day_to_birthday = myFriend.days_in_past_year - myDate.days_in_past_year;
+    myFriend.printTime();
+    myFriend.printData();
+    cout << "Dniv do dnya narodjenya: " << day_to_birthday << endl;
+
+
+}
