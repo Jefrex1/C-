@@ -1,0 +1,45 @@
+#include <iostream>
+using namespace std;
+
+class RatNum {
+private:
+    int numerator;
+    int denominator;
+
+public:
+    RatNum(int num, int den) : numerator(num), denominator(den) {}
+
+    void print() const {
+        cout << numerator << "/" << denominator;
+    }
+
+    RatNum add(const RatNum& other) const {
+        int resultNumerator = numerator * other.denominator + other.numerator * denominator;
+        int resultDenominator = denominator * other.denominator;
+        return RatNum(resultNumerator, resultDenominator);
+    }
+
+
+    RatNum subtract(const RatNum& other) const {
+        int resultNumerator = numerator * other.denominator - other.numerator * denominator;
+        int resultDenominator = denominator * other.denominator;
+        return RatNum(resultNumerator, resultDenominator);
+    }
+};
+
+int main() {
+
+    RatNum fraction1(1, 1);
+    RatNum fraction2(1, 1);
+
+    RatNum sum = fraction1.add(fraction2);
+    RatNum difference = fraction1.subtract(fraction2);
+
+    cout << "Sum: ";
+    sum.print();
+    cout << endl;
+
+    cout << "Difference: ";
+    difference.print();
+    cout << endl;
+}
