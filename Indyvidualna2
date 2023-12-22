@@ -1,0 +1,57 @@
+#include <iostream>
+using namespace std;
+
+class ComplexNumber {
+private:
+    double real;
+    double imaginary;
+
+public:
+
+    ComplexNumber() : real(0.0), imaginary(0.0) {}
+
+    ComplexNumber(double r, double i) : real(r), imaginary(i) {}
+
+    ComplexNumber(const ComplexNumber& other) : real(other.real), imaginary(other.imaginary) {}
+
+    ComplexNumber operator+(const ComplexNumber& other) const {
+        return ComplexNumber(real + other.real, imaginary + other.imaginary);
+    }
+
+    ComplexNumber operator*(const ComplexNumber& other) const {
+        // (a + bi) * (c + di) = (ac - bd) + (ad + bc)i
+        return ComplexNumber((real * other.real) - (imaginary * other.imaginary),
+            (real * other.imaginary) + (imaginary * other.real));
+    }
+
+    ComplexNumber operator*(double scalar) const {
+        return ComplexNumber(real * scalar, imaginary * scalar);
+    }
+
+    ComplexNumber& operator++() {
+        real++;
+        imaginary++;
+        return *this;
+    }
+
+    friend ostream& operator<<(ostream& os, const ComplexNumber& complexNumber) {
+        os << complexNumber.real << " + " << complexNumber.imaginary << "i";
+        return os;
+    }
+};
+
+int main() {
+    ComplexNumber num1(2.0, 3.0);
+    ComplexNumber num2(1.0, -2.0);
+
+    ComplexNumber sum = num1 + num2;
+    ComplexNumber productComplex = num1 * num2;
+    ComplexNumber productScalar = num1 * 2.5;
+
+    ++num1;
+
+    cout << "Sum: " << sum << endl;
+    cout << "Product with complex number: " << productComplex << endl;
+    cout << "Product with scalar: " << productScalar << endl;
+    cout << "Incremented num1: " << num1 << endl;
+}
